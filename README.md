@@ -56,3 +56,18 @@ Examples. Puede utilizar Cucumber o Specflow.
 Para el feature redactado en la pregunta anterior, implemente los Step Definition generados para las
 pruebas de sistema del FrontEnd o RESTful API, utilizando pseudocódigo o un lenguaje de
 programación.
+
+
+##Prompt
+1.El codigo generado debe de ser sencillo orientado a la eficiencia de alguien codificando sin ia(clases,enum) y metodos en las mismas clases. Osea no orientado a las buenas practicas de que sea escalable. Mientras mas sencillo mejor
+2.Debes de generar un codigo en el main.java para verficar si corre bien.
+3.La creacion del .puml debe seguir las siguientes relaciones si se ve necesario:
+Extensión	<|--	Especialización de una clase en una jerarquía
+Implementación	<|..	Realización de una interfaz mediante una clase
+Composición	*--	La parte no puede existir sin el todo
+Agregación	o--	La parte puede existir independientemente del todo
+Dependencia	-->	El objeto utiliza otro objeto
+Dependencia	..>	Una forma más débil de dependencia
+4.Los test deben de seguir el patron AAA
+5.Debes de usar mockito si lo ves necesario.
+6.No es necesario pedir permiso para verificar los test, simplemente toma accion en la creacion de ellos.
