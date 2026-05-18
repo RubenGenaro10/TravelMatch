@@ -1,0 +1,97 @@
+@startuml TravelMatchClassDiagram
+
+skinparam classAttributeIconSize 0
+
+enum EstadoViaje {
+    PENDIENTE
+    RESERVADO
+    EN_CURSO
+    FINALIZADO
+}
+
+enum TipoProveedor {
+    HOTEL
+    RESTAURANTE
+    GUIA_TURISTICO
+    TOUR_AVENTURA
+}
+
+class Viajero {
+    - id: String
+    - nombre: String
+    - DNI: String
+    - email: String
+    - telefono: String
+    - destinoDeseado: String
+    - fechaViaje: String
+    - presupuesto: String
+    - preferenciasViaje: String
+    - agenciaViajeSeleccionada: AgenciaViaje
+    - puntajeAgenciaViaje: int
+    - pagoRealizado: boolean
+    - proveedoresContratados: List<ProveedorExperiencia>
+    + actualizarPerfilViaje(String, String, String, String): void
+    + seleccionarAgenciaViaje(AgenciaViaje): void
+    + elegirItinerarioYReservar(Itinerario): void
+    + chatearConAgencia(String): void
+    + realizarPago(double): void
+    + calificarExperiencia(ProveedorExperiencia, int): void
+    + calificarAgenciaViaje(int): void
+    + recibirNotificacion(String): void
+}
+
+class AgenciaViaje {
+    - id: String
+    - nombre: String
+    - RUC: String
+    - razonSocial: String
+    - representanteLegal: String
+    - estadoViaje: EstadoViaje
+    - itinerariosOfrecidos: List<Itinerario>
+    - proveedoresRegistrados: List<ProveedorExperiencia>
+    + agregarItinerario(Itinerario): void
+    + registrarProveedor(ProveedorExperiencia): void
+    + actualizarEstadoViaje(EstadoViaje): void
+    + enviarItinerario(Viajero, Itinerario): void
+    + emitirFactura(String): void
+    + generarReporteSatisfaccion(): void
+}
+
+class Itinerario {
+    - id: String
+    - actividad: String
+    - alojamiento: String
+    - transporte: String
+    - fecha: String
+    - proveedoresInvolucrados: List<ProveedorExperiencia>
+    + agregarProveedor(ProveedorExperiencia): void
+}
+
+class ProveedorExperiencia {
+    - id: String
+    - nombre: String
+    - tipoProveedor: TipoProveedor
+    - precio: String
+    - activo: boolean
+    - reportesIncumplimiento: int
+    - descripcion: String
+    - servicioCompletado: boolean
+    - cobrado: boolean
+    + publicarServicio(String, List<String>, List<String>): void
+    + reportarIncumplimiento(): void
+    + confirmarCompletado(): void
+    + cobrar(): void
+}
+
+' Relaciones
+AgenciaViaje *-- Itinerario : gestiona
+AgenciaViaje o-- ProveedorExperiencia : registra_para_viaje
+Itinerario o-- ProveedorExperiencia : vincula
+Viajero --> AgenciaViaje : selecciona
+Viajero o-- ProveedorExperiencia : califica
+Viajero ..> Itinerario : visualiza/reserva
+AgenciaViaje ..> EstadoViaje : usa
+ProveedorExperiencia ..> TipoProveedor : usa
+
+@enduml
+
